@@ -1,4 +1,4 @@
 module.exports = {
-    memberProfile: require('./memberProfile'),
-    createAccount: require('./createAccount')
+    MemberProfile: require('./memberProfile'),
+    CreateAccount: require('./createAccount')
 }

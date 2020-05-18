@@ -8,24 +8,24 @@ const memberProfileSchema = mongoose.Schema({
     },
     username: {
         type: String,
-        required
+        required: true
     },
     firstName: {
         type: String,
-        required
+        required: true
     },
     lastName: {
         type: String,
-        required
+        required: true
     },
     salutation: {
         type: String,
-        required
+        required: true
     },
     occupation: String,
     email: {
         type: String,
-        required
+        required: true
     }
 });
 
