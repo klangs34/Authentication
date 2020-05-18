@@ -7,9 +7,9 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route to='/' component={CreateAccount}/>
-        <Route to='/login' component={Signin} />
-        <Route to='/create-account' component={CreateAccount} />
+        <Route path='/login' component={Signin} />
+        <Route path='/create-account' component={CreateAccount} />
+        <Route exact path='/' component={CreateAccount}/>
       </Switch>
     </div>
   );
