@@ -16,11 +16,12 @@ const SignIn = (props) => {
       .post("/api/login", { email, password })
       .then((data) => {
         localStorage.setItem("jwtToken", data.data.token);
+        localStorage.setItem("user", data.data.email);
         setIsLoggedIn(true);
       })
       .catch((err) => {
-        console.log(err);
-        //setDisplayError(err.response.data.error.message);
+        //console.log(err);
+        setDisplayError(err.response.data.error.message);
       });
   };
 

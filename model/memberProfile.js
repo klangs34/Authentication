@@ -7,20 +7,16 @@ const memberProfileSchema = mongoose.Schema({
         ref: "members"
     },
     username: {
-        type: String,
-        required: true
+        type: String
     },
     firstName: {
-        type: String,
-        required: true
+        type: String
     },
     lastName: {
-        type: String,
-        required: true
+        type: String
     },
     salutation: {
-        type: String,
-        required: true
+        type: String
     },
     occupation: String,
     email: {
