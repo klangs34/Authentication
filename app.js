@@ -3,19 +3,22 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const mongoose = require("mongoose");
+const logger = require("morgan");
 
 const PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/spaceship", 
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     });
 
 const apiRoutes = require('./routes/apiRoutes');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(logger("dev"));
 
 app.use(express.static(path.join(__dirname, "public")));
 

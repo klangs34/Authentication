@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
@@ -7,6 +7,12 @@ const SignIn = (props) => {
   const [password, setPassword] = useState("");
   const [displayError, setDisplayError] = useState("");
   const [isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [flashLogin, setFlashLogin ] = useState(false);
+  const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('jwtToken') !== "" && setIsLoggedIn(true);
+  }, [])
 
   const handleSignin = (e) => {
     e.preventDefault();
@@ -15,8 +21,9 @@ const SignIn = (props) => {
     axios
       .post("/api/login", { email, password })
       .then((data) => {
+        setDisplayError("");
         localStorage.setItem("jwtToken", data.data.token);
-        localStorage.setItem("user", data.data.email);
+        setFlashLogin(true);
         setIsLoggedIn(true);
       })
       .catch((err) => {
@@ -25,11 +32,21 @@ const SignIn = (props) => {
       });
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.setItem('jwtToken', '');
+    setDisplay(true);
+    setTimeout(() => {
+       props.history.push('/');
+    }, 1200)
+}
+
   return (
     <>
     <nav className="navbar navbar-light bg-light">
         <Link to="/" className="navbar-brand">Spaceship</Link>
-        {isLoggedIn ? <Link to="/member-profile" className="ml-auto">Profile</Link>
+        {isLoggedIn ? <><Link to="/member-profile" className="ml-auto">Profile</Link>
+        <a className="nav-link" href="/" onClick={handleLogout}>Logout</a></>
         : <Link to='/create-account'>Create Account</Link>}
     </nav>
     <div className="container">
@@ -38,9 +55,14 @@ const SignIn = (props) => {
             {displayError}
           </div>
         )}
-        {isLoggedIn && 
+        {flashLogin && 
         <div className="alert alert-success" role="alert">
             Login Successful!
+        </div>
+        }
+        {display && 
+        <div className="alert alert-success" role="alert">
+            Logout Successful!
         </div>
         }
       <form>

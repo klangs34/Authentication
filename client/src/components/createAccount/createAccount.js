@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
@@ -7,6 +7,12 @@ const CreateAccount = (props) => {
   const [password, setPassword] = useState("");
   const [displayError, setDisplayError] = useState("");
   const [isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [flashLogin, setFlashLogin ] = useState(false);
+  const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('jwtToken') !== "" && setIsLoggedIn(true);
+  }, [])
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -14,7 +20,9 @@ const CreateAccount = (props) => {
     axios
       .post("/api/create-account", { email, password })
       .then((data) => {
+        setDisplayError("");
         localStorage.setItem("jwtToken", data.data.token);
+        setFlashLogin(true);
         setIsLoggedIn(true);
       })
       .catch((err) => {
@@ -23,11 +31,19 @@ const CreateAccount = (props) => {
       });
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.setItem('jwtToken', '');
+    setDisplay(true);
+    setIsLoggedIn(false);
+}
+
   return (
     <>
     <nav className="navbar navbar-light bg-light">
         <Link to="/" className="navbar-brand">Spaceship</Link>
-        {isLoggedIn ? <Link to="/member-profile" className="ml-auto">Profile</Link>
+        {isLoggedIn ? <><Link to="/member-profile" className="ml-auto">Profile</Link>
+        <a className="nav-link" href="/" onClick={handleLogout}>Logout</a></>
         : <Link to="/login">Login</Link>}
    </nav>
     <div className="container">
@@ -37,12 +53,16 @@ const CreateAccount = (props) => {
             {displayError}
           </div>
         )}
-        {isLoggedIn && 
+        {flashLogin && 
         <div className="alert alert-success" role="alert">
             Account Created Successfully!
         </div>
         }
-     
+        {display && 
+        <div className="alert alert-success" role="alert">
+            Logout Successful!
+        </div>
+        }
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email Address</label>
           <input

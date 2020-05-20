@@ -17,11 +17,10 @@ Router
             
             //update member profile with new user data
             await db.MemberProfile.create({
-                userId: user._id,
-                email: user.email
+                userId: user._id
             });
 
-            let { email } = user;
+            let { _id, email } = user;
             let token = jwt.sign({
                 _id,
                 email
@@ -79,15 +78,17 @@ Router
 
     Router.get('/member-profile', isAuthenticated, (req, res, next) => {
         try {
-            db.MemberProfile.find({ email: req.email })
-                .then(data => res.json(data));
+            db.MemberProfile.findOne({ userId: req.user._id })
+                .then(data => {
+                    res.json(data)
+                });
         } catch (error) {
             return next(error);
         }
     });
 
     Router.put('/update-member-info', isAuthenticated, (req, res, next) => {
-        db.MemberProfile.findOneAndUpdate({ email: req.email }, req.body)
+        db.MemberProfile.findOneAndUpdate({ userId: req.user._id }, req.body)
             .then(data => res.json(data));
     });
 

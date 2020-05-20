@@ -10,7 +10,7 @@ function App() {
       <Switch>
         <Route path='/login' component={Signin} />
         <Route path='/create-account' component={CreateAccount} />
-        <Route path='/member-profile' component={MemberProfile} />
+        <Route path='/member-profile' component={(props) => <MemberProfile {...props} /> } />
         <Route exact path='/' component={CreateAccount}/>
       </Switch>
     </div>

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const members = require('./createAccount');
+mongoose.Promise = Promise;
 
 const memberProfileSchema = mongoose.Schema({
     userId: {
@@ -18,11 +19,7 @@ const memberProfileSchema = mongoose.Schema({
     salutation: {
         type: String
     },
-    occupation: String,
-    email: {
-        type: String,
-        required: true
-    }
+    occupation: String
 });
 
 const MemberProfile = mongoose.model('memberProfile', memberProfileSchema);
