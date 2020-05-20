@@ -24,6 +24,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/api', apiRoutes);
 
+if (process.env.NODE_ENV === "production") {
+  //for when connected in Heroku
+  app.use(express.static("client/build"));
+}
+
+
 app.get('*', (req, res) => {
     res.sendFile("index.html");
 });
