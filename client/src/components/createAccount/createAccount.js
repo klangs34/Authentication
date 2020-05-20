@@ -14,8 +14,18 @@ const CreateAccount = (props) => {
     localStorage.getItem('jwtToken') !== "" && setIsLoggedIn(true);
   }, [])
 
+  const emailValid = (email) => {
+    const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/;
+    return emailRegex.test(email);
+}
+
   const handleSignup = (e) => {
     e.preventDefault();
+
+    if(!emailValid(email)) {
+      setDisplayError('Invalid email format');
+      return;
+    }
 
     axios
       .post("/api/create-account", { email, password })
@@ -49,17 +59,17 @@ const CreateAccount = (props) => {
     <div className="container">
       <form>
         {displayError && (
-          <div className="alert alert-danger" role="alert">
+          <div className="alert alert-danger mt-2" role="alert">
             {displayError}
           </div>
         )}
         {flashLogin && 
-        <div className="alert alert-success" role="alert">
+        <div className="alert alert-success mt-2" role="alert">
             Account Created Successfully!
         </div>
         }
         {display && 
-        <div className="alert alert-success" role="alert">
+        <div className="alert alert-success mt-2" role="alert">
             Logout Successful!
         </div>
         }
