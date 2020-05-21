@@ -26,16 +26,16 @@ app.use(logger("dev"));
 
 //app.use(express.static(path.join(__dirname, "public")));
 
-// if (process.env.NODE_ENV === "production") {
-//   //for when connected in Heroku
-//   app.use(express.static("client/build"));
-// }
+if (process.env.NODE_ENV === "production") {
+  //for when connected in Heroku
+  app.use(express.static("client/build"));
+}
 
 app.use("/api", apiRoutes);
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
