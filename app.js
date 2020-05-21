@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(logger("dev"));
 
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/api', apiRoutes);
 
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 app.get('*', (req, res) => {
-    res.sendFile("index.html");
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 // catch 404 and forward to error handler
