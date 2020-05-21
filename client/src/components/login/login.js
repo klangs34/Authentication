@@ -11,8 +11,7 @@ const SignIn = (props) => {
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    localStorage.getItem("jwtToken") === "" ||
-      (!localStorage.getItem("jwtToken") && setIsLoggedIn(false));
+    localStorage.getItem("jwtToken") !== "" && setIsLoggedIn(true);
   }, []);
 
   const handleSignin = (e) => {
