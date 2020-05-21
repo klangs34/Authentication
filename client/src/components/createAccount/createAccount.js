@@ -11,7 +11,9 @@ const CreateAccount = (props) => {
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    localStorage.getItem("jwtToken") !== "" && setIsLoggedIn(true);
+    localStorage.getItem("jwtToken") &&
+      localStorage.getItem("jwtToken") !== "" &&
+      setIsLoggedIn(true);
   }, []);
 
   const emailValid = (email) => {
