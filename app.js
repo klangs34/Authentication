@@ -26,10 +26,10 @@ app.use(logger("dev"));
 
 //app.use(express.static(path.join(__dirname, "public")));
 
-if (process.env.NODE_ENV === "production") {
-  //for when connected in Heroku
-  app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   //for when connected in Heroku
+//   app.use(express.static("client/build"));
+// }
 
 app.use("/api", apiRoutes);
 
